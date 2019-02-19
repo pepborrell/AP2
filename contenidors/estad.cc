@@ -21,7 +21,8 @@ int main(){
 			iss >> x;
 			suma += x;
 			pq.push(x);
-			if(x > maxim) maxim = x;
+			int n = pq.size();
+			if(x > maxim or n == 1) maxim = x;
 		}
 		int n = pq.size();
 		if(n){
