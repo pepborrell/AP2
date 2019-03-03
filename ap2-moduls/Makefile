@@ -29,4 +29,3 @@ Point.o: Point.cc Point.hh
 Rectangle.o: Rectangle.cc Rectangle.hh Point.hh
 
 Circle.o: Circle.cc Circle.hh Point.hh
-
