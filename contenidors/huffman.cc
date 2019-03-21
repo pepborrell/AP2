@@ -3,23 +3,28 @@
 #include <utility>
 using namespace std;
 
-using Bitcount = pair<double, int>;
-
-void initialise_queue(int n, priority_queue<int, vector<int>, greater<int>>& pq){
-	for(int i=0; i<n; ++i){
-		Bitcount x;
-		cin >> x.first;	x.second = 0;
-		pq.push(x);
-	}
+double reduir (priority_queue<double>& pq) {
+	double sum = pq.top();
+	pq.pop();
+	sum += pq.top();
+	pq.pop();
+	pq.push(sum);
+	return sum;
 }
 
-double calculate(int n){
-	priority_queue<int, vector<int>, greater<int>> pq;
-	initialise_queue(n, pq);
-	while(int(pq.size()) > 1){
-		int a, b; //Numbers with the lowest frequency.
-		
+double calcular (int n) {
+	priority_queue<double> freq;
+	double x;
+	for (int i=0; i<n; ++i) {
+		cin >> x;
+		freq.push(x/100);
 	}
+	double total = 0;
+	while (freq.size() > 1) {
+		total += reduir(freq);
+		cerr << total << endl;
+	}
+	return total;
 }
 
 int main(){
