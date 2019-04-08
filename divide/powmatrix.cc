@@ -18,32 +18,21 @@ void print_m(const Matrix& M) {
     cout << "----------" << endl;
 }
 
-Matrix multiply_m(const Matrix& M1, const Matrix& M2) {
+Matrix multiply_m(const Matrix& M1, const Matrix& M2, int m) {
     Matrix R(2, vector<int>(2));
-    R[0][0] = M1[0][0]*M2[0][0] + M1[0][1]*M2[1][0];
-    R[0][1] = M1[0][0]*M2[0][1] + M1[0][1]*M2[1][1];
-    R[1][0] = M1[1][0]*M2[0][0] + M1[1][1]*M2[1][0];
-    R[1][1] = M1[1][0]*M2[0][1] + M1[1][1]*M2[1][1];
+    R[0][0] = (M1[0][0]*M2[0][0]%m + M1[0][1]*M2[1][0]%m)%m;
+    R[0][1] = (M1[0][0]*M2[0][1]%m + M1[0][1]*M2[1][1]%m)%m;
+    R[1][0] = (M1[1][0]*M2[0][0]%m + M1[1][1]*M2[1][0]%m)%m;
+    R[1][1] = (M1[1][0]*M2[0][1]%m + M1[1][1]*M2[1][1]%m)%m;
     return R;
-}
-
-Matrix modulify(const Matrix& N, int m) {
-    Matrix M = N;
-    for (vector<int>& v : M) {
-        for (int& x : v) {
-            x = x%m;
-        }
-    }
-    return M;
 }
 
 Matrix calculate(const Matrix& M, int n, int m) {
     if (n == 0) return Matrix({vector<int> {1, 0}, vector<int> {0, 1}});
-    if (n == 1) return M;
+    //if (n == 1) return M;
     Matrix R = calculate(M, n/2, m);
-    R = modulify(R, m);
-    if (n%2) return modulify(multiply_m(multiply_m(R, R), M), m);
-    return modulify(multiply_m(R, R), m);
+    if (n%2) return multiply_m(multiply_m(R, R, m), M, m);
+    return multiply_m(R, R, m);
 }
 
 int main() {
