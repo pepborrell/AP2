@@ -34,25 +34,36 @@ Graph create_graph (const vector<Rock>& vr, int d) {
 	return G;
 }
 
-int n_leaps (const Graph& G, int x, int y, vector<bool>& visited) {
+int n_leaps (const Graph& G, int y) {
 	int n = G.size();
 	vector<int> level(n, -1);
-	level[0] = -1;
-	queue q;
-	
+	level[0] = 0;
+	queue<int> q;
+	q.push(0);
+	while (not q.empty()) {
+		int u = q.front();	q.pop();
+		for (int v : G[u]) {
+			if (level[v] == -1) {
+				level[v] = level[u] + 1;
+				q.push(v);
+				if (v == y) return level[y];
+			}
+		}
+	}
+	return level[y];
 }
 
 int main () {
 	int n;
 	double d;
-	cin >> n >> d;
-	
-	vector<Rock> vr(n);
-	for (Rock& s : vr) {
-		cin >> s.x >> s.y >> s.r;
+	while (cin >> n >> d) {
+		vector<Rock> vr(n);
+		for (Rock& s : vr) {
+			cin >> s.x >> s.y >> s.r;
+		}
+		Graph G = create_graph(vr, d);
+		int res =  n_leaps(G, n-1);
+		if (res == -1) cout << "Xof!" << endl;
+		else cout << res << endl;
 	}
-	Graph G = create_graph(vr, d);
-	
-	vector<bool> visited(n, false);
-	cout << path(G, 0, n-1, visited) << endl;
 }
