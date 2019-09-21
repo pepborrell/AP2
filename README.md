@@ -1,2 +1,2 @@
 # AP2
-Aquí guardo tots els arxius relacionats amb AP2 (com possibles apunts i problemes). Els treballs potser els guardo en un altre repositori.
+Aquí guardo tots els arxius relacionats amb l'assignatura d'algorísmia i programació 2 (com possibles apunts i problemes). Assignatura cursada el curs 2018-2019.
